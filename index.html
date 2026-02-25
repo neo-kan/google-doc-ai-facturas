@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Google Doc AI</title>
+</head>
+<body>
+    <input id="factura" type="file">
+    <button id="btn">Subir factura</button>
+
+    <script>
+        const btn = document.getElementById('btn')
+        const factura = document.getElementById('factura')
+
+        const N8N_WEBHOOK_URL = "https://n8n-facturas-demo.onrender.com/webhook/google-doc-ai";
+        const N8N_LOCAL = "http://localhost:5678/webhook-test/google-doc-ai";
+
+        btn.addEventListener('click',async() => { 
+            const file = factura.files[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const res = await fetch(N8N_WEBHOOK_URL, { method: "POST", body: formData });
+            const json = res.json()
+            console.log(json )
+        })
+    </script>
+</body>
+</html>
